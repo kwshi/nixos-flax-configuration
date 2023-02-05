@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,82 +19,40 @@
     };
   };
 
-  outputs = inputs:
-    inputs.digga.lib.mkFlake {
-      inherit (inputs) self;
-      inherit inputs;
-      channels = {
-        nixpkgs = {};
+  outputs = inputs: {
+    nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+      ({nixpkgs.overlays = [(final: prev: {unstable=inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;})];})
+        inputs.home-manager.nixosModules.home-manager
+        ./hardware-configuration.nix
+        ./system/hosts/flax.nix
+        ./home/users/kshi.nix
+        {
+          home-manager.useGlobalPkgs= true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = {
+            suites = {
+              base = [
+                ./home/profiles/misc.nix
+                ./home/profiles/bat.nix
+                ./home/profiles/neovim
+                ./home/profiles/rofi.nix
+                ./home/profiles/gh.nix
+              ];
+            };
+          };
+        }
+        {
+          nix.extraOptions = ''
+            extra-experimental-features = flakes nix-command
+          '';
+        }
+      ];
+      specialArgs = {
+        suites = {base = [./system/profiles/binbash.nix ./system/profiles/console.nix];};
       };
-      channelsConfig = {allowUnfree = true;};
-      nixos = {
-        hostDefaults = {
-          system = "x86_64-linux";
-          channelName = "nixpkgs";
-          modules = [inputs.home-manager.nixosModules.home-manager];
-        };
-        #imports = [(inputs.digga.lib.importHosts ./hosts)];
-        hosts = {
-          flax = {
-            modules = [./hardware-configuration.nix ./hosts/flax.nix];
-          };
-        };
-        importables = rec {
-          profiles = inputs.digga.lib.rakeLeaves ./profiles;
-          users = inputs.digga.lib.rakeLeaves ./users;
-          suites = {
-            base = [users.kshi profiles.console];
-          };
-        };
-      };
-      home = {
-        importables = rec {
-          profiles = inputs.digga.lib.rakeLeaves ./home/profiles;
-          suites = {
-            base = [profiles.bat];
-          };
-        };
-        users = {
-          kshi = {
-            suites,
-            pkgs,
-            ...
-          }: {
-            imports = suites.base;
-            home.stateVersion = "22.11";
-            programs.git.enable = true;
-            home.packages = with pkgs; [neofetch];
-          };
-        };
-      };
-    }
-    // {
-      nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          ./hardware-configuration.nix
-          ./hosts/flax.nix
-          ./users/kshi.nix
-          {home-manager.useUserPackages = true;}
-          {
-            nix.extraOptions = ''
-              extra-experimental-features = flakes nix-command
-            '';
-          }
-        ];
-        specialArgs = {
-          suites = {base = [];};
-          hmUsers.kshi = {pkgs, ...}: {
-            home.stateVersion = "22.11";
-            programs.bat.enable = true;
-            home.packages = with pkgs; [neofetch];
-            programs.git.enable = true;
-	    programs.git.userName = "Kye Shi";
-	    programs.git.userEmail = "shi.kye@gmail.com";
-          };
-        };
-      };
-      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
     };
+    formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
+  };
 }

@@ -1,17 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{
-  suites,
-  config,
-  pkgs,
-  ...
+{ suites
+, lib
+, config
+, pkgs
+, ...
 }: {
   imports =
     suites.base;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
@@ -28,7 +29,19 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  #networking.networkmanager.enable = true;
+
+  #networking.wireless.dbusControlled=true;
+  #networking.wireless.enable = true;
+  services.connman.enable = true;
+  services.connman.wifi.backend = "wpa_supplicant";
+  environment.etc."wpa_supplicant.conf".text =
+    lib.mkIf config.services.connman.enable
+      ''
+        # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
+        # see <NixOS/nixpkgs#212347>
+      '';
+  #networking.wireless.interfaces = ["wlp170s0"];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -50,8 +63,37 @@
 
   # Configure keymap in X11
   services.xserver = {
+    enable = true;
     layout = "us";
     xkbVariant = "workman";
+    xkbOptions = "ctrl:nocaps,altwin:swap_alt_win";
+    libinput = {
+      enable = true;
+      touchpad.accelProfile = "flat";
+      mouse.accelProfile = "flat";
+    };
+
+    displayManager = {
+      defaultSession = "none+xsession";
+      session = [
+        {
+          name = "xsession";
+          manage = "window";
+          start = "";
+        }
+      ];
+      lightdm = {
+        enable = true;
+        greeters.mini = {
+          user = "kshi";
+          enable = true;
+          extraConfig = ''
+            [greeter]
+            show-password-label = false
+          '';
+        };
+      };
+    };
   };
 
   users.mutableUsers = true;
