@@ -2,7 +2,7 @@
   programs.git = {
     enable = true;
     userName = "Kye Shi";
-    userEmail = "shi.kye@gmail.com";
+    userEmail = "kiwishi@proton.me";
     signing = {
       key = "69B1A859";
       signByDefault = true;
