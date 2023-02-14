@@ -19,40 +19,56 @@
     };
   };
 
-  outputs = inputs: {
-    nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-      ({nixpkgs.overlays = [(final: prev: {unstable=inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;})];})
-        inputs.home-manager.nixosModules.home-manager
-        ./hardware-configuration.nix
-        ./system/hosts/flax.nix
-        ./home/users/kshi.nix
-        {
-          home-manager.useGlobalPkgs= true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            suites = {
-              base = [
-                ./home/profiles/misc.nix
-                ./home/profiles/bat.nix
-                ./home/profiles/neovim
-                ./home/profiles/rofi.nix
-                ./home/profiles/gh.nix
-              ];
+  outputs = inputs:
+    let lib = import ./lib inputs.nixpkgs.lib; in
+    {
+      nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ({ nixpkgs.overlays = [ (final: prev: { unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; }) ]; })
+          inputs.home-manager.nixosModules.home-manager
+          ./hardware-configuration.nix
+          ./system/hosts/flax.nix
+          ./home/users/kiwi.nix
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = rec {
+              profiles = lib.crawl ./home/profiles;
+              suites = {
+                base = [
+                  profiles.misc
+                  profiles.bat
+                  profiles.neovim
+                  profiles.rofi
+                  profiles.python
+                  profiles.github
+                  profiles.zathura
+                  profiles.firefox
+                  profiles.git
+                  profiles.pass
+                  profiles.btop
+                  profiles.alacritty
+                ];
+              };
             };
+          }
+          {
+            nix.extraOptions = ''
+              extra-experimental-features = flakes nix-command
+            '';
+          }
+        ];
+        specialArgs = rec {
+          profiles = lib.crawl ./system/profiles;
+          suites = {
+            base = [
+              profiles.binbash
+              profiles.console
+            ];
           };
-        }
-        {
-          nix.extraOptions = ''
-            extra-experimental-features = flakes nix-command
-          '';
-        }
-      ];
-      specialArgs = {
-        suites = {base = [./system/profiles/binbash.nix ./system/profiles/console.nix];};
+        };
       };
+      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
     };
-    formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
-  };
 }

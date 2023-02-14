@@ -85,11 +85,14 @@
       lightdm = {
         enable = true;
         greeters.mini = {
-          user = "kshi";
+          user = "kiwi";
           enable = true;
           extraConfig = ''
             [greeter]
             show-password-label = false
+            [greeter-theme]
+            background-image = ""
+            background-image-size = cover
           '';
         };
       };
