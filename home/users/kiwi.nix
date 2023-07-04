@@ -3,7 +3,7 @@
   users.users.kiwi = {
     isNormalUser = true;
     description = "Kye";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
   };
 
   home-manager.users.kiwi =
@@ -18,18 +18,12 @@
       fonts.fontconfig.enable = true;
       programs.bat.enable = true;
       home.packages = with pkgs; [
+        river
         imagemagick
         neofetch
-        julia-mono
         signal-desktop
         (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; })
       ];
-      programs.gpg = {
-        enable = true;
-      };
-      services.gpg-agent = {
-        enable = true;
-      };
       xsession.enable = true;
       xsession.windowManager.awesome.enable = true;
       xsession.windowManager.awesome.luaModules = with pkgs.luaPackages; [ fennel ];

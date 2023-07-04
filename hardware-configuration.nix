@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
@@ -14,14 +15,16 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/73f54078-042f-4e36-9050-07be68632245";
+    {
+      device = "/dev/disk/by-uuid/73f54078-042f-4e36-9050-07be68632245";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."luks-b35e70d8-6d0e-4e84-ba37-af19c90442d7".device = "/dev/disk/by-uuid/b35e70d8-6d0e-4e84-ba37-af19c90442d7";
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/39E9-6097";
+    {
+      device = "/dev/disk/by-uuid/39E9-6097";
       fsType = "vfat";
     };
 
@@ -37,6 +40,4 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
 }

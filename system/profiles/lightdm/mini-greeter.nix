@@ -1,3 +1,4 @@
+{ }
 ## LightDM Mini Greeter Configuration
 ##
 ## To test your configuration out, run: lightdm --test-mode

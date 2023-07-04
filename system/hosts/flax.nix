@@ -61,43 +61,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    xkbVariant = "workman";
-    xkbOptions = "ctrl:nocaps,altwin:swap_alt_win";
-    libinput = {
-      enable = true;
-      touchpad.accelProfile = "flat";
-      mouse.accelProfile = "flat";
-    };
-
-    displayManager = {
-      defaultSession = "none+xsession";
-      session = [
-        {
-          name = "xsession";
-          manage = "window";
-          start = "";
-        }
-      ];
-      lightdm = {
-        enable = true;
-        greeters.mini = {
-          user = "kiwi";
-          enable = true;
-          extraConfig = ''
-            [greeter]
-            show-password-label = false
-            [greeter-theme]
-            background-image = ""
-            background-image-size = cover
-          '';
-        };
-      };
-    };
-  };
 
   users.mutableUsers = true;
 
@@ -113,6 +76,10 @@
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
   ];
+
+  environment.variables = {
+    GDK_DPI_SCALE = "1.5";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
