@@ -1,5 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
+    wl-clipboard
+
     typst
     rmapi
     peek
@@ -38,9 +40,13 @@
     tikzit
 
     gimp
+    inkscape
 
     find-cursor
 
-    foot
+    file
+    zip
+    unzip
+
   ];
 }

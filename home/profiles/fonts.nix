@@ -5,5 +5,10 @@
     nerdfonts
     stix-two
     xits-math
+    eb-garamond
+    garamond-libre
+
+    line-awesome
+    font-awesome
   ];
 }

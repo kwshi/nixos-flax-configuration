@@ -3,6 +3,7 @@
   home.packages = with pkgs; [ xclip libnotify ];
   services.espanso = {
     enable = true;
+    package = pkgs.espanso-wayland;
     configs.default = {
       search_trigger = "off";
       toggle_key = false;

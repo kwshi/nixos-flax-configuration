@@ -18,7 +18,6 @@
       fonts.fontconfig.enable = true;
       programs.bat.enable = true;
       home.packages = with pkgs; [
-        river
         imagemagick
         neofetch
         signal-desktop

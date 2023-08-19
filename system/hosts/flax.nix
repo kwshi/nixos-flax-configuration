@@ -77,6 +77,11 @@
     #  wget
   ];
 
+  hardware.bluetooth = {
+    enable = true;
+
+  };
+
   environment.variables = {
     GDK_DPI_SCALE = "1.5";
   };

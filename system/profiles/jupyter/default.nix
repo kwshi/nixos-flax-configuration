@@ -5,13 +5,7 @@ let kernels = import ./kernels.nix pkgs; in
     enable = true;
     port = 9181;
     password = "open(${builtins.toJSON config.age.secrets.jupyter.path},'r',encoding='utf8').read().strip()";
-    #notebookConfig = ''
-    #  c.ServerApp.password = open(
-    #    ${builtins.toJSON config.age.secrets.jupyter.path},
-    #    'r',
-    #    encoding='utf8'
-    #  ).read().strip()
-    #'';
+    notebookDir = "~/notebook";
     inherit kernels;
   };
 
@@ -59,6 +53,7 @@ let kernels = import ./kernels.nix pkgs; in
             --no-browser \
             --ip=localhost \
             --port=9180 \
+            --notebook-dir='~/notebook' \
             --ServerApp.config_file='${serverConfig}'
         '';
         User = "jupyter";
@@ -66,5 +61,10 @@ let kernels = import ./kernels.nix pkgs; in
         WorkingDirectory = "~";
       };
     };
+
+    system.activationScripts.makeJupyterNotebookDir = pkgs.lib.stringAfter [ "var" ] ''
+      mkdir -p '${config.users.users.jupyter.home}/notebook'
+      chown jupyter:jupyter '${config.users.users.jupyter.home}/notebook'
+    '';
   }
 )

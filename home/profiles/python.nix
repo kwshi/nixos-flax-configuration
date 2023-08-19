@@ -5,6 +5,9 @@
       numpy
       sympy
       matplotlib
+
+      pkgs.qtile-unwrapped
+      qtile-extras
     ]))
   ];
 

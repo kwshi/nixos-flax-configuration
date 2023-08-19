@@ -2,7 +2,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    fenix.url = "github:nix-community/fenix";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +34,14 @@
         system = "x86_64-linux";
         modules = [
           inputs.agenix.nixosModules.age
-          ({ nixpkgs.overlays = [ (final: prev: { unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; }) ]; })
+          ({
+            nixpkgs.overlays = [
+              (final: prev: {
+                unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+              })
+              inputs.fenix.overlays.default
+            ];
+          })
           ({
 
             #nixpkgs.config.permittedInsecurePackages = [
@@ -47,6 +57,8 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = rec {
+              ks = lib;
+              #fenix = inputs.fenix;
               espanso-extra = { inherit (inputs) espanso-latex; };
               profiles = lib.crawl ./home/profiles;
               suites = {
@@ -84,6 +96,12 @@
                   profiles.mathematica
                   profiles.udiskie
                   profiles.waybar
+                  profiles.foot
+                  profiles.river
+                  profiles.qtile
+                  profiles.rust
+                  profiles.safeeyes
+                  profiles.haskell
                 ];
               };
             };
