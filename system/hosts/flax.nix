@@ -1,11 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ suites
-, lib
-, config
-, pkgs
-, ...
+{
+  suites,
+  lib,
+  config,
+  pkgs,
+  ...
 }: {
   imports =
     suites.base;
@@ -37,10 +38,10 @@
   services.connman.wifi.backend = "wpa_supplicant";
   environment.etc."wpa_supplicant.conf".text =
     lib.mkIf config.services.connman.enable
-      ''
-        # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
-        # see <NixOS/nixpkgs#212347>
-      '';
+    ''
+      # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
+      # see <NixOS/nixpkgs#212347>
+    '';
   #networking.wireless.interfaces = ["wlp170s0"];
 
   # Set your time zone.
@@ -61,7 +62,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-
   users.mutableUsers = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -79,7 +79,6 @@
 
   hardware.bluetooth = {
     enable = true;
-
   };
 
   environment.variables = {

@@ -5,7 +5,7 @@
     };
     browserpass = {
       enable = true;
-      browsers = [ "firefox" ];
+      browsers = ["firefox"];
     };
   };
 }

@@ -10,6 +10,10 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     digga = {
       url = "github:divnix/digga/v0.11.0";
       inputs = {
@@ -25,41 +29,69 @@
       url = "github:zoenglinghou/espanso-latex";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland/v0.28.0";
   };
 
-  outputs = inputs:
-    let lib = import ./lib inputs.nixpkgs.lib; in
-    {
-      nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          inputs.agenix.nixosModules.age
-          ({
-            nixpkgs.overlays = [
-              (final: prev: {
-                unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
-              })
-              inputs.fenix.overlays.default
-            ];
+  outputs = inputs: let
+    lib = import ./lib inputs.nixpkgs.lib;
+    profiles = lib.crawl ./system/profiles;
+    common-modules = [
+      inputs.agenix.nixosModules.age
+      inputs.home-manager.nixosModules.home-manager
+      {
+        nixpkgs.overlays = [
+          (final: prev: {
+            unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
           })
-          ({
+          inputs.fenix.overlays.default
+        ];
+      }
+      {
+        nix = {
+          extraOptions = ''
+            extra-experimental-features = flakes nix-command
+          '';
 
-            #nixpkgs.config.permittedInsecurePackages = [
-            #  "openssl-1.1.1u"
-            #];
+          settings = {
+            substituters = ["https://hyprland.cachix.org"];
+            trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+          };
+        };
 
-          })
-          inputs.home-manager.nixosModules.home-manager
+        home-manager.extraSpecialArgs = rec {
+          ks = lib;
+          profiles = lib.crawl ./home/profiles;
+        };
+
+        home-manager.sharedModules = [
+          inputs.hyprland.homeManagerModules.default
+        ];
+      }
+    ];
+  in {
+    nixosConfigurations.maki = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules =
+        common-modules
+        ++ [
+          ./system/hosts/maki.nix
+          ./hw-maki.nix
+          ./home/users/kiwi-maki.nix
+        ];
+    };
+
+    nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules =
+        common-modules
+        ++ [
           ./hardware-configuration.nix
           ./system/hosts/flax.nix
           ./home/users/kiwi.nix
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = rec {
               ks = lib;
-              #fenix = inputs.fenix;
-              espanso-extra = { inherit (inputs) espanso-latex; };
+              espanso-extra = {inherit (inputs) espanso-latex;};
               profiles = lib.crawl ./home/profiles;
               suites = {
                 base = [
@@ -106,39 +138,36 @@
               };
             };
           }
-          ({ config, ... }: {
-            nix.extraOptions = ''
-              extra-experimental-features = flakes nix-command
-            '';
-
+          ({config, ...}: {
             # plugin-files = ${
             #     inputs.nixpkgs.legacyPackages.x86_64-linux.nix-plugins.override
             #     { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
-            # 
+            #
           })
-          ({ imports = [ ./age.nix ]; })
+          {imports = [./age.nix];}
         ];
-        specialArgs = rec {
-          profiles = lib.crawl ./system/profiles;
-          suites = {
-            base = [
-              profiles.lightdm
-              profiles.binbash
-              profiles.console
-              profiles.geoclue
-              profiles.light
-              profiles.steam
-              profiles.pipewire
-              profiles.podman
-              profiles.printing
-              profiles.jupyter
-              profiles.dconf
-              profiles.udisks2
-              profiles.greetd
-            ];
-          };
+      specialArgs = rec {
+        profiles = lib.crawl ./system/profiles;
+        suites = {
+          base = [
+            profiles.lightdm
+            profiles.binbash
+            profiles.console
+            profiles.geoclue
+            profiles.light
+            profiles.steam
+            profiles.pipewire
+            profiles.podman
+            profiles.printing
+            profiles.jupyter
+            profiles.dconf
+            profiles.udisks2
+            profiles.greetd
+            profiles.home-manager
+          ];
         };
       };
-      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
     };
+    formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.alejandra;
+  };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland.override {
@@ -14,9 +14,8 @@
     };
 
     font = "JuliaMono 14";
-    pass = { enable = true; };
+    pass = {enable = true;};
     terminal = "foot";
     theme = "gruvbox-dark-soft";
-
   };
 }

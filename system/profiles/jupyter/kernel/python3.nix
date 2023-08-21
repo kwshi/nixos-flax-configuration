@@ -1,25 +1,24 @@
-pkgs:
-let
+pkgs: let
   py = pkgs.python3;
-  env = py.withPackages (pyPkgs: with pyPkgs; [
-    ipykernel
-    ipywidgets
-    ipympl
+  env = py.withPackages (pyPkgs:
+    with pyPkgs; [
+      ipykernel
+      ipywidgets
+      ipympl
 
-    numpy
-    sympy
-    scipy
+      numpy
+      sympy
+      scipy
 
-    matplotlib
-    seaborn
-    bokeh
+      matplotlib
+      seaborn
+      bokeh
 
-    pandas
+      pandas
 
-    requests
-  ]);
-in
-{
+      requests
+    ]);
+in {
   displayName = "Python ${py.version}";
   argv = [
     "${env.interpreter}"

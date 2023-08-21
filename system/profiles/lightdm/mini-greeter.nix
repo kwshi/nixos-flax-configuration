@@ -1,4 +1,4 @@
-{ }
+{}
 ## LightDM Mini Greeter Configuration
 ##
 ## To test your configuration out, run: lightdm --test-mode
@@ -110,3 +110,4 @@
 ## The default `-5px -5px -5px` works well with the password label enabled.
 ## If you have the label disabled, you might want to try `-5px -5px 0px`
 #sys-info-margin = -5px -5px -5px
+

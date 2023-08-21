@@ -1,7 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = [
-    (pkgs.haskellPackages.ghcWithPackages (ps: with ps; [
-      stack
-    ]))
+    (pkgs.haskellPackages.ghcWithPackages (ps:
+      with ps; [
+        stack
+      ]))
   ];
 }

@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   virtualisation.podman = {
     enable = true;
   };
-  environment.systemPackages = [ pkgs.buildah ];
+  environment.systemPackages = [pkgs.buildah];
 }

@@ -1,6 +1,10 @@
-{ pkgs, espanso-extra, ... }: {
+{
+  pkgs,
+  espanso-extra,
+  ...
+}: {
   # TODO: update espanso in nixpkgs to version 2
-  home.packages = with pkgs; [ xclip libnotify ];
+  home.packages = with pkgs; [xclip libnotify];
   services.espanso = {
     enable = true;
     package = pkgs.espanso-wayland;
@@ -13,9 +17,18 @@
         {
           trigger = ":fulldate";
           replace = "{{date}}";
-          vars = [{ name = "date"; type = "date"; params = { format = "%F %T (%A)"; }; }];
+          vars = [
+            {
+              name = "date";
+              type = "date";
+              params = {format = "%F %T (%A)";};
+            }
+          ];
         }
-        { trigger = "\\alpha"; replace = "α"; }
+        {
+          trigger = "\\alpha";
+          replace = "α";
+        }
       ];
     };
   };
