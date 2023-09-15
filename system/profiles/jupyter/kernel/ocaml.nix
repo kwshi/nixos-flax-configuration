@@ -1,6 +1,4 @@
-pkgs:
-let
-
+pkgs: let
   opkgs = pkgs.ocamlPackages;
 
   runtime-libs = with opkgs; [
@@ -19,7 +17,7 @@ let
   # https://github.com/NixOS/nixpkgs/blob/8f7b4e88946c61da4cd43d1bcc1c982bb96d9ee8/pkgs/development/tools/ocaml/utop/default.nix#L27
   runtime-env = pkgs.stdenv.mkDerivation {
     name = "ocaml-jupyter-runtime";
-    propagatedBuildInputs = runtime-libs ++ [ opkgs.findlib opkgs.ppx_yojson_conv_lib ];
+    propagatedBuildInputs = runtime-libs ++ [opkgs.findlib opkgs.ppx_yojson_conv_lib];
     dontUnpack = true;
     installPhase = ''
       mkdir -p "$out/etc/ocaml-jupyter-runtime"
@@ -38,28 +36,26 @@ let
       sha256 = "sha256-wy5Fn4wrSdNVczXlm4eelb445vWs7itdiMv166XJA/8=";
     };
 
-    nativeBuildInputs = [ opkgs.cppo opkgs.findlib pkgs.makeWrapper ];
+    nativeBuildInputs = [opkgs.cppo opkgs.findlib pkgs.makeWrapper];
 
-    buildInputs = (with opkgs;
-      [
-        runtime-env
+    buildInputs = with opkgs; [
+      runtime-env
 
-        ppx_yojson_conv
-        ppx_deriving
+      ppx_yojson_conv
+      ppx_deriving
 
-        base
-        uuidm
-        base64
-        lwt
-        lwt_ppx
-        stdint
-        zmq
-        zmq-lwt
-        yojson
-        cryptokit
-        logs
-
-      ]);
+      base
+      uuidm
+      base64
+      lwt
+      lwt_ppx
+      stdint
+      zmq
+      zmq-lwt
+      yojson
+      cryptokit
+      logs
+    ];
 
     # https://github.com/tweag/jupyenv/blob/3ad2c9512c9efd586cf63adde454e734a8ce049c/modules/kernels/ocaml/default.nix#L82
     postFixup = ''
@@ -71,8 +67,6 @@ let
         --prefix OCAMLPATH : "$out/lib/ocaml/${opkgs.ocaml.version}/site-lib/" \
         --prefix OCAMLPATH : "$(cat '${runtime-env}/etc/ocaml-jupyter-runtime/OCAMLPATH')"
     '';
-
-
   };
 
   # https://github.com/tweag/jupyenv/blob/3ad2c9512c9efd586cf63adde454e734a8ce049c/modules/kernels/ocaml/default.nix#L78
@@ -80,9 +74,7 @@ let
     #use "${opkgs.findlib}/lib/ocaml/${opkgs.ocaml.version}/site-lib/topfind";;
     Topfind.log := ignore;;
   '';
-
-in
-{
+in {
   displayName = "OCaml ${opkgs.ocaml.version}";
   argv = [
     "${ocaml-jupyter}/bin/ocaml-jupyter-kernel"

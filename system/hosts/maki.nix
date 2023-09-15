@@ -2,27 +2,19 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  suites,
-  lib,
   config,
   pkgs,
   ...
 }: {
-  imports =
-    suites.base;
+  nix.extraOptions = ''
+    extra-experimental-features = nix-command flakes
+  '';
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
-  networking.hostName = "flax"; # Define your hostname.
+  networking.hostName = "maki"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -30,19 +22,7 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  #networking.networkmanager.enable = true;
-
-  #networking.wireless.dbusControlled=true;
-  #networking.wireless.enable = true;
-  services.connman.enable = true;
-  services.connman.wifi.backend = "wpa_supplicant";
-  environment.etc."wpa_supplicant.conf".text =
-    lib.mkIf config.services.connman.enable
-    ''
-      # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
-      # see <NixOS/nixpkgs#212347>
-    '';
-  #networking.wireless.interfaces = ["wlp170s0"];
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -62,36 +42,52 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  users.mutableUsers = true;
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "workman";
+  };
+
+  #programs.hyprland.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.kiwi = {
+    isNormalUser = true;
+    description = "Kye";
+    extraGroups = ["networkmanager" "wheel"];
+    packages = with pkgs; [];
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
-    git
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
+    git
+    firefox
+    signal-desktop
+    pass
+    pinentry-rofi
+    pinentry-gtk2
+    pinentry
   ];
 
-  hardware.bluetooth = {
+  services.pipewire = {
     enable = true;
-  };
-
-  environment.variables = {
-    GDK_DPI_SCALE = "1.5";
+    pulse.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryFlavor = "gtk2";
+  };
 
   # List services that you want to enable:
 
@@ -110,5 +106,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 }

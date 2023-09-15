@@ -12,20 +12,18 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.kernelModules = ["kvm-intel" "wl"];
+  boot.extraModulePackages = [config.boot.kernelPackages.broadcom_sta];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/73f54078-042f-4e36-9050-07be68632245";
+    device = "/dev/disk/by-uuid/c36bd28d-f3e7-4294-960c-5a1f01c87db1";
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."luks-b35e70d8-6d0e-4e84-ba37-af19c90442d7".device = "/dev/disk/by-uuid/b35e70d8-6d0e-4e84-ba37-af19c90442d7";
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/39E9-6097";
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/67E3-17ED";
     fsType = "vfat";
   };
 
@@ -36,9 +34,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp170s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp1s0f0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

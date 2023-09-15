@@ -3,7 +3,8 @@
     enable = true;
     settings = {
       main = {
-        font = "JuliaMono:size=8";
+        font = "JuliaMono:size=10";
+        dpi-aware = "no";
       };
       colors = {
         alpha = 1.0;
@@ -34,7 +35,6 @@
         # dim0=<not set>
         # ...
         # dim7=<not-set>
-
       };
     };
   };

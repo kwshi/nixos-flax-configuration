@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     wl-clipboard
 
@@ -19,7 +19,6 @@
     maim
     ffmpeg
     zoom-us
-
 
     pamixer
     pulseaudio
@@ -47,6 +46,5 @@
     file
     zip
     unzip
-
   ];
 }

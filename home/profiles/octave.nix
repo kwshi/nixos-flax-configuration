@@ -1,3 +1,3 @@
-{ pkgs, ... }: {
-  home.packages = [ (pkgs.octave.withPackages (opkgs: [ ])) ];
+{pkgs, ...}: {
+  home.packages = [(pkgs.octave.withPackages (opkgs: []))];
 }

@@ -1,1 +1,1 @@
-pkgs: pkgs.sage.kernelspec // { logo64 = ./sage.svg; }
+pkgs: pkgs.sage.kernelspec // {logo64 = ./sage.svg;}

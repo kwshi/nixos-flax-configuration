@@ -1,6 +1,6 @@
 {
   age = {
-    identityPaths = [ "/home/kiwi/.ssh/keys/agenix" ];
+    identityPaths = ["/home/kiwi/.ssh/keys/agenix"];
     secrets = {
       jupyter = {
         file = ./secret/jupyter.age;
