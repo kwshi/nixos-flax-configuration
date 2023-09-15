@@ -29,6 +29,7 @@
       profiles.user-dirs
       profiles.starship
       profiles.pass
+      profiles.ssh
     ];
     home.stateVersion = "23.05";
     programs.git.signing.key = "D1AF94B0";
