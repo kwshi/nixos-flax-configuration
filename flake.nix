@@ -83,12 +83,14 @@
         ];
     };
 
-nixosConfigurations.arky = inputs.nixpkgs.lib.nixosSystem {
-system = "x86_64-linux";
-modules = common-modules ++ [
-./host/arky
-];
-};
+    nixosConfigurations.arky = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules =
+        common-modules
+        ++ [
+          ./host/arky
+        ];
+    };
 
     nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

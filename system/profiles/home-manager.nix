@@ -1,6 +1,6 @@
 {
-home-manager = {
-useGlobalPkgs = true;
-useUserPackages = true;
-};
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 }

@@ -1,15 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-./users.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./users.nix
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -42,9 +43,6 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
-  
-
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e,caps:escape";
@@ -69,17 +67,17 @@
   #   ];
   # };
 
- # List packages installed in system profile. To search, run:
+  # List packages installed in system profile. To search, run:
   # $ nix search wget
-   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
 
-git
-inetutils
-mtr
-sysstat
-   ];
+    git
+    inetutils
+    mtr
+    sysstat
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -92,10 +90,10 @@ sysstat
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-services.openssh = {
-enable=true;
-settings.PermitRootLogin="yes";
-};
+  services.openssh = {
+    enable = true;
+    settings.PermitRootLogin = "yes";
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -103,9 +101,9 @@ settings.PermitRootLogin="yes";
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-networking.usePredictableInterfaceNames = false;
-networking.useDHCP = false;
-networking.interfaces.eth0.useDHCP=true;
+  networking.usePredictableInterfaceNames = false;
+  networking.useDHCP = false;
+  networking.interfaces.eth0.useDHCP = true;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -119,6 +117,4 @@ networking.interfaces.eth0.useDHCP=true;
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
-
