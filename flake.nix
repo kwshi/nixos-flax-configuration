@@ -34,7 +34,10 @@
 
   outputs = inputs: let
     lib = import ./lib inputs.nixpkgs.lib;
-    profiles = lib.crawl ./system/profiles;
+
+    system-profiles = lib.crawl ./system/profiles;
+    home-profiles = lib.crawl ./home/profiles;
+
     common-modules = [
       inputs.agenix.nixosModules.age
       inputs.home-manager.nixosModules.home-manager
@@ -79,6 +82,13 @@
           ./home/users/kiwi-maki.nix
         ];
     };
+
+nixosConfigurations.arky = inputs.nixpkgs.lib.nixosSystem {
+system = "x86_64-linux";
+modules = common-modules ++ [
+./host/arky
+];
+};
 
     nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
