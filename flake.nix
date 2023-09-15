@@ -130,6 +130,7 @@
               profiles.steam
               profiles.pipewire
               profiles.podman
+              profiles.docker
               profiles.printing
               profiles.jupyter
               profiles.dconf
