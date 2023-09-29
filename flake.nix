@@ -78,6 +78,9 @@
           ./hw-maki.nix
           ./home/users/kiwi-maki.nix
         ];
+      specialArgs = {
+        profiles = lib.crawl ./system/profiles;
+      };
     };
 
     nixosConfigurations.flax = inputs.nixpkgs.lib.nixosSystem {

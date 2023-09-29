@@ -4,8 +4,13 @@
 {
   config,
   pkgs,
+  profiles,
   ...
 }: {
+  imports = [
+    profiles.console
+    profiles.geoclue
+  ];
   nix.extraOptions = ''
     extra-experimental-features = nix-command flakes
   '';
@@ -48,6 +53,9 @@
     xkbVariant = "workman";
   };
 
+  # needed for hyprland; see
+  # <https://github.com/hyprwm/Hyprland/issues/40>
+  hardware.opengl.enable = true;
   #programs.hyprland.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -78,6 +86,15 @@
   services.pipewire = {
     enable = true;
     pulse.enable = true;
+  };
+
+  programs.dconf.enable = true;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+  security.rtkit.enable = true;
+  xdg.portal = {
+    wlr.enable = false;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   # Some programs need SUID wrappers, can be configured further or are

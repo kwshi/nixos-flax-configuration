@@ -15,3 +15,5 @@
                   :settings 
                   {:nil {
                   :formatting {:command [:alejandra]}}}})
+
+(lsp.pyright.setup {: on_attach})

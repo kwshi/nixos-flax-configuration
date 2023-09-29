@@ -37,6 +37,8 @@
         zathura
         github
         hyprland
+        gammastep
+        ime
       ]);
     home.stateVersion = "23.05";
     home.file = {
