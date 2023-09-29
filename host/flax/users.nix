@@ -8,12 +8,56 @@
 
   home-manager.users.kiwi = {
     pkgs,
-    suites,
+    profiles,
     config,
     lib,
     ...
   }: {
-    imports = suites.base ++ [./kiwi/ssh.nix];
+    imports = (
+      with profiles; [
+        ssh
+        sagemath
+        eww
+        misc
+        bat
+        neovim
+        rofi
+        python
+        github
+        zathura
+        firefox
+        git
+        pass
+        btop
+        alacritty
+        starship
+        user-dirs
+        gammastep
+        espanso
+        bash
+        exa
+        thunderbird
+        fonts
+        gpg
+        ime
+        mpv
+        jq
+        octave
+        xournalpp
+        java
+        theme
+        mathematica
+        udiskie
+        waybar
+        foot
+        river
+        qtile
+        rust
+        safeeyes
+        haskell
+      ]
+    );
+
     home.stateVersion = "22.11";
     fonts.fontconfig.enable = true;
     programs.bat.enable = true;
