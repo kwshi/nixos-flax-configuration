@@ -80,4 +80,5 @@
       arky = makeHost ./host/arky;
       flax = makeHost ./host/flax;
     };
+  };
 }

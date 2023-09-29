@@ -13,33 +13,30 @@
     lib,
     ...
   }: {
-    imports =
-      [
-        ./kiwi/ssh.nix
-      ]
-      ++ (with profiles; [
-        bash
-        bat
-        btop
-        exa
-        fonts
-        foot
-        user-dirs
-        waybar
-        neovim-nix
-        theme
-        firefox
-        gpg
-        starship
-        rofi
-        helix
-        mpv
-        zathura
-        github
-        hyprland
-        gammastep
-        ime
-      ]);
+    imports = with profiles; [
+      ssh
+      bash
+      bat
+      btop
+      exa
+      fonts
+      foot
+      user-dirs
+      waybar
+      neovim-nix
+      theme
+      firefox
+      gpg
+      starship
+      rofi
+      helix
+      mpv
+      zathura
+      github
+      hyprland
+      gammastep
+      ime
+    ];
     home.stateVersion = "23.05";
     home.file = {
       nixos.source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos";
