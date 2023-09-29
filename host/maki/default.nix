@@ -7,10 +7,7 @@
   profiles,
   ...
 }: {
-  imports = [
-    profiles.console
-    profiles.geoclue
-  ];
+  imports = [./hardware-configuration.nix ./users.nix];
   nix.extraOptions = ''
     extra-experimental-features = nix-command flakes
   '';

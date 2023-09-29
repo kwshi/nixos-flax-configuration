@@ -2,14 +2,33 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  suites,
+  profiles,
   lib,
   config,
   pkgs,
   ...
 }: {
   imports =
-    suites.base;
+    [
+      ./hardware-configuration.nix
+      ./users.nix
+    ]
+    ++ (with profiles; [
+      lightdm
+      binbash
+      console
+      geoclue
+      light
+      steam
+      pipewire
+      podman
+      printing
+      jupyter
+      dconf
+      udisks2
+      greetd
+      home-manager
+    ]);
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
