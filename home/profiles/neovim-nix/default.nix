@@ -1,8 +1,9 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   lua-config = pkgs.stdenv.mkDerivation {
     name = "ks-neovim-lua-config";
     src = ./config;
-    buildInputs = [pkgs.fennel];
+    buildInputs = [ pkgs.fennel ];
     buildPhase = ''
       fennel --compile 'init.fnl' > 'init.lua'
 
@@ -18,7 +19,8 @@
       cp -rT 'lua' "$out/lua"
     '';
   };
-in {
+in
+{
   programs.neovim = {
     enable = true;
 
@@ -50,6 +52,7 @@ in {
       nodePackages.alex
       nodePackages."@prisma/language-server"
       nodePackages.svelte-language-server
+      nodePackages.svelte
       nodePackages.typescript-language-server
       nodePackages.pyright
       nodePackages."@astrojs/language-server"

@@ -1,12 +1,11 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{
-  suites,
-  lib,
-  config,
-  pkgs,
-  ...
+{ suites
+, lib
+, config
+, pkgs
+, ...
 }: {
   imports =
     suites.base;
@@ -38,10 +37,10 @@
   services.connman.wifi.backend = "wpa_supplicant";
   environment.etc."wpa_supplicant.conf".text =
     lib.mkIf config.services.connman.enable
-    ''
-      # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
-      # see <NixOS/nixpkgs#212347>
-    '';
+      ''
+        # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
+        # see <NixOS/nixpkgs#212347>
+      '';
   #networking.wireless.interfaces = ["wlp170s0"];
 
   # Set your time zone.
@@ -82,7 +81,8 @@
   };
 
   environment.variables = {
-    GDK_DPI_SCALE = "1.5";
+    # maybe don't use this on wayland, since wayland display resolution scaling automatically takes care of things?
+    #GDK_DPI_SCALE = "1.5";
   };
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     wl-clipboard
 
@@ -46,5 +46,7 @@
     file
     zip
     unzip
+
+    x11docker
   ];
 }

@@ -97,6 +97,7 @@
                 profiles = lib.crawl ./home/profiles;
                 suites = {
                   base = [
+                    profiles.vscode
                     profiles.sagemath
                     profiles.eww
                     profiles.misc

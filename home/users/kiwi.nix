@@ -9,15 +9,17 @@
   home-manager.users.kiwi =
     { pkgs
     , suites
+    , profiles
     , config
     , lib
     , ...
     }: {
-      imports = suites.base ++ [ ./kiwi/ssh.nix ];
+      imports = suites.base ++ [ ./kiwi/ssh.nix profiles.fuzzel ];
       home.stateVersion = "22.11";
       fonts.fontconfig.enable = true;
       programs.bat.enable = true;
       home.packages = with pkgs; [
+        filezilla
         imagemagick
         neofetch
         signal-desktop
@@ -35,6 +37,12 @@
       };
       home.file = {
         nixos.source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos";
+      };
+
+      services.kanshi.profiles = {
+        standalone = {
+          outputs = [{ criteria = "eDP-1"; scale = 1.5; }];
+        };
       };
     };
 }
