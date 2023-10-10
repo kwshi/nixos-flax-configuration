@@ -1,6 +1,6 @@
 {
   pkgs,
-  espanso-extra,
+  #espanso-extra,
   ...
 }: {
   # TODO: update espanso in nixpkgs to version 2
