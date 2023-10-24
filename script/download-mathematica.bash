@@ -23,7 +23,7 @@ path="$(curl -fsSL -c cookies -b cookies \
 )"
 
 readarray -t -d ';' fields < <(curl -fsSL -c cookies -b cookies \
-  "https://user.wolfram.com$path" \
+  "https://user.wolfram.com$path&products=Previous" \
   | pup 'a[rel*=";Linux;"] attr{rel}'
 )
 
@@ -31,6 +31,8 @@ readarray -t -d ';' fields < <(curl -fsSL -c cookies -b cookies \
 tmp="$(mktemp --tmpdir="${XDG_RUNTIME_DIR:-/tmp}" -d 'mathematica-download.XXXXX')"
 curl -c cookies -b cookies -o "$tmp/${fields[5]}" -L \
   "https://user.wolfram.com/portal/download.html?exec=${fields[0]}&lic=${fields[6]}&lpid=${fields[8]}"
-mkdir -p 'mathematica'
-mv -t 'mathematica' "$tmp/${fields[5]}"
-rm -rf "$tmp"
+
+store_path="$(nix store add-path "$tmp/${fields[5]}" --name "${fields[5]}")"
+echo "$store_path"
+nix hash "$tmp/${fields[5]}"
+nix-store --query --hash "$store_path"
