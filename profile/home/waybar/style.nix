@@ -1,4 +1,6 @@
-css: [
+css: let
+  blockPadding = "4px 12px";
+in [
   (css "*" {
     font-family = "'JuliaMono', 'FontAwesome 6 Free'";
     font-size = "14px";
@@ -15,7 +17,7 @@ css: [
     "#pulseaudio"
     "#backlight"
     "#network"
-  ] {padding = "8px 16px";})
+  ] {padding = blockPadding;})
 
   (css "#clock" {background-color = "#076678";})
   (css "#battery" {background-color = "#9d0006";})
@@ -31,7 +33,7 @@ css: [
       transition = "none";
       font-weight = "bold";
       min-width = "0";
-      padding = "4px 16px";
+      padding = blockPadding;
       color = "#fbf1c7";
     }
     [

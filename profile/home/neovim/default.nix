@@ -36,6 +36,11 @@ in {
       vimtex
       luasnip
       julia-vim
+
+      nvim-cmp
+      cmp-nvim-lsp
+      cmp_luasnip
+
       (nvim-treesitter.withPlugins (p:
         with p; [
           latex

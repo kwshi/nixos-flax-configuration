@@ -1,9 +1,11 @@
-(local tectonic-opts [:--keep-logs :--synctex  :-Z :shell-escape :-Z :../.ks-latex])
+(local tectonic-opts [:--keep-logs :--synctex  :-Z :shell-escape :-Z :search-path=../.ks-latex])
 (local latexmk-opts [:-verbose :-file-line-error :-synctex=1 :interaction=nonstopmode :-shell-escape])
 
 (set vim.g.vimtex_compiler_method :tectonic)
 
-;(set vim.g.vimtex_compiler_generic {:command "tectonic --keep-logs --synctex --outdir '_build' -Z shell-escape -Z search-path \"$(just path-to-root)/.ks-latex\""})
+; https://stackoverflow.com/questions/957928/is-there-a-way-to-get-the-git-root-directory-in-one-command
+; doesn't work; I also need some way of detecting the "current" file, or whatever
+;(set vim.g.vimtex_compiler_generic {:command "tectonic --keep-logs --synctex --outdir '_build' -Z shell-escape -Z search-path=\"$(git rev-parse --show-toplevel)/.ks-latex\""})
 
 ; TODO: try checking path to look for ks-latex and dynamically construct
 ; tectonic args

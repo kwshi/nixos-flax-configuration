@@ -1,6 +1,6 @@
 (local ls (require :luasnip))
 
-(local snippet-types [:tex])
+(local snippet-types [:all :tex :markdown])
 
 (fn map-si [key f]
   (vim.keymap.set :s key f)
