@@ -11,7 +11,7 @@
     #(ns.scroll (- vim.wo.scroll) true 100 :sine))
 
 (vim.keymap.set :n :gg
-      #(ns.gg 100))
+      #(ns.gg 50))
 
 ;(vim.keymap.set :n :G
 ;      #(ns.G 100))

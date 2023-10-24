@@ -21,8 +21,14 @@
 
 (vim.cmd "colorscheme gruvbox")
 
+(vim.api.nvim_create_autocmd [:BufEnter]
+                             {:callback #(set vim.o.formatoptions :qjmMl)})
+
 (vim.loader.enable)
 (require :ks.tree-sitter)
 (require :ks.neoscroll)
 (require :ks.lspconfig)
 (require :ks.telescope)
+(require :ks.vimtex)
+(require :ks.luasnip)
+(require :ks.cmp)
