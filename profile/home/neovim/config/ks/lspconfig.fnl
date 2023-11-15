@@ -6,6 +6,7 @@
 (fn on_attach [client buffer]
   (let [bufopts {:noremap true :silent true : buffer}]
     (vim.keymap.set :n :<leader><leader> vim.lsp.buf.hover bufopts)
+    (vim.keymap.set :n :<leader>a #(vim.lsp.buf.code_action))
     ;;(vim.keymap.set :n :<leader>f #(format true))
     ;;(vim.api.nvim_create_autocmd [:BufWritePre]
     ;;                             {: buffer :callback #(format false)})

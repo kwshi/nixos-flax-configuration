@@ -49,6 +49,7 @@ in {
           fennel
           ocaml
           typescript
+          php
         ]))
     ];
 
@@ -73,6 +74,10 @@ in {
       alejandra
       rnix-lsp
       nil
+
+      unstable.emmet-ls
+
+      phpactor
 
       typst-fmt
       typst-lsp

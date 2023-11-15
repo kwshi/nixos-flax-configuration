@@ -28,12 +28,12 @@ pkgs: let
 
   ocaml-jupyter = opkgs.buildDunePackage rec {
     pname = "jupyter";
-    version = "2.8.2";
+    version = "2.8.3";
     src = pkgs.fetchFromGitHub {
       owner = "akabe";
-      repo = pname;
+      repo = "ocaml-jupyter";
       rev = "v${version}";
-      sha256 = "sha256-wy5Fn4wrSdNVczXlm4eelb445vWs7itdiMv166XJA/8=";
+      sha256 = "sha256-uMk0rsLqlwkkzB52V5khMyr3rYsn7Mfyq31ybH69KgI=";
     };
 
     nativeBuildInputs = [opkgs.cppo opkgs.findlib pkgs.makeWrapper];
