@@ -32,3 +32,5 @@
 (require :ks.vimtex)
 (require :ks.luasnip)
 (require :ks.cmp)
+(require :ks.conform)
+(require :ks.rextify)

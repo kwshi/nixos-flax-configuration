@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     wl-clipboard
 
@@ -7,7 +7,8 @@
     peek
     just
     pavucontrol
-    unstable.webcord
+    # https://github.com/NixOS/nixpkgs/issues/266879
+    (webcord.override {electron_24 = electron_25;})
     ripgrep
     meson
     ninja
@@ -27,14 +28,12 @@
 
     pup
 
-    elmPackages.lamdera
-    elmPackages.elm
+    #elmPackages.lamdera
+    #elmPackages.elm
 
-    notion-app-enhanced
+    #notion-app-enhanced
     # appflowy (depends on obsoleted openssl-1.1.1?)
-    obsidian
-
-    openscad
+    #obsidian
 
     tikzit
 

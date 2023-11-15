@@ -27,7 +27,8 @@ in {
 
     plugins = with pkgs.vimPlugins; [
       gruvbox-nvim
-      null-ls-nvim
+      #null-ls-nvim
+      pkgs.unstable.vimPlugins.conform-nvim
       neoscroll-nvim
       nvim-lspconfig
       telescope-nvim
