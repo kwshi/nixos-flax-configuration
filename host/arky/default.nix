@@ -4,12 +4,15 @@
 {
   config,
   pkgs,
+  profiles,
   ...
 }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./users.nix
+    profiles.caddy
+    profiles.home-manager
   ];
 
   # Use the GRUB 2 boot loader.
