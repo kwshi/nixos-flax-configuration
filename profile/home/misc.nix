@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    roc
+
     wl-clipboard
 
     typst

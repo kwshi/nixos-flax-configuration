@@ -1,4 +1,4 @@
-{ config, ... }: {
+{config, ...}: {
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -9,7 +9,10 @@
       "arky.kshi.xyz" = {
         identityFile = "${config.home.homeDirectory}/.ssh/keys/arky";
       };
-
+      "laguna.pic.ucla.edu" = {
+        user = "kwshi";
+        identityFile = "${config.home.homeDirectory}/.ssh/keys/kwshi@laguna.pic.ucla.edu";
+      };
     };
   };
 }

@@ -22,4 +22,5 @@
 
 (lsp.emmet_ls.setup {: on_attach})
 (lsp.phpactor.setup {: on_attach})
+(lsp.ccls.setup {: on_attach})
 

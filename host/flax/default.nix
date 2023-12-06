@@ -1,12 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ profiles
-, lib
-, config
-, pkgs
-, ...
+{
+  profiles,
+  lib,
+  config,
+  pkgs,
+  ...
 }: {
   imports =
     [
@@ -36,6 +36,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  hardware.keyboard.qmk.enable = true;
+  # https://get.vial.today/manual/linux-udev.html
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
@@ -57,10 +64,10 @@
   services.connman.wifi.backend = "wpa_supplicant";
   environment.etc."wpa_supplicant.conf".text =
     lib.mkIf config.services.connman.enable
-      ''
-        # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
-        # see <NixOS/nixpkgs#212347>
-      '';
+    ''
+      # dummy config file; config controls `wpa_supplicant` through dbus, but the NixOS `wpa_supplicant` module is currently nevertheless configured to expect a `/etc/wpa_supplicant.conf`.
+      # see <NixOS/nixpkgs#212347>
+    '';
   #networking.wireless.interfaces = ["wlp170s0"];
 
   # Set your time zone.
