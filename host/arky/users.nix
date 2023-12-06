@@ -18,11 +18,11 @@
   }: {
     imports = [
       profiles.helix
-      profiles.neovim-nix
+      profiles.neovim
       profiles.bash
       profiles.bat
       profiles.btop
-      profiles.exa
+      profiles.eza
       profiles.git
       profiles.github
       profiles.gpg
@@ -32,7 +32,7 @@
       profiles.ssh
     ];
     home.stateVersion = "23.05";
-    programs.git.signing.key = "D1AF94B0";
+    programs.git.signing.key = "E43C6773";
     services.gpg-agent.pinentryFlavor = "curses";
   };
 }

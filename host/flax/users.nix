@@ -37,7 +37,7 @@
         gammastep
         espanso
         bash
-        exa
+        eza
         thunderbird
         fonts
         gpg

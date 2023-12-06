@@ -1,7 +1,7 @@
 {
   programs.gh = {
     enable = true;
-    enableGitCredentialHelper = true;
+    gitCredentialHelper.enable = true;
     settings = {
       editor = "nvim";
       git_protocol = "ssh";

@@ -18,7 +18,7 @@
       bash
       bat
       btop
-      exa
+      eza
       fonts
       foot
       user-dirs
