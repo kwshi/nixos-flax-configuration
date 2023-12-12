@@ -9,8 +9,11 @@
     peek
     just
     pavucontrol
+
     # https://github.com/NixOS/nixpkgs/issues/266879
-    (webcord.override {electron_24 = electron_25;})
+    #(webcord.override {electron_24 = electron_25;})
+    webcord
+
     ripgrep
     meson
     ninja

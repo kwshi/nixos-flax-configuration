@@ -11,8 +11,9 @@
         sympy
         matplotlib
 
-        pkgs.qtile-unwrapped
-        qtile-extras
+        # temporary build failure on 23.11; commenting out until i need it
+        #pkgs.qtile-unwrapped
+        #qtile-extras
       ]))
   ];
 

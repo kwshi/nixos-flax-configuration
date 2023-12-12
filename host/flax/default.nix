@@ -30,6 +30,15 @@
       home-manager
     ]);
 
+  ks.caddy = {
+    enable = true;
+    host.localhost = {
+      php.enable = true;
+    };
+  };
+  # disable local SSL (caddy tries to install local cert, fails)
+  services.caddy.virtualHosts.localhost.hostName = "http://localhost";
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.memtest86.enable = true;

@@ -57,7 +57,9 @@ in {
       wl-clipboard
 
       fnlfmt
-      black
+      #pkgs.python312Packages.black
+      ruff
+      ruff-lsp
 
       ccls
       rust-analyzer

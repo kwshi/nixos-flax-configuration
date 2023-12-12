@@ -39,6 +39,7 @@
   outputs = inputs: let
     flakeLib = import ./flake/lib.nix inputs.nixpkgs.lib;
 
+    systemModules = flakeLib.crawl ./module/system;
     systemProfiles = flakeLib.crawl ./profile/system;
     homeProfiles = flakeLib.crawl ./profile/home;
 
@@ -71,6 +72,7 @@
           sharedModules = [inputs.hyprland.homeManagerModules.default];
         };
       }
+      systemModules.caddy
       ./age.nix
     ];
 

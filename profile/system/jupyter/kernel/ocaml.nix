@@ -6,7 +6,7 @@ pkgs: let
     containers
     yojson
     zarith
-    wayland
+    #wayland # error: 'wayland-2.0' is not available for ocaml 4.14.1
 
     vg
     lambdasoup
