@@ -2,12 +2,18 @@
   lib,
   config,
   ...
-}: {
+}: let
+  caddyCfg = config.services.caddy;
+in {
   options.ks.caddy = {
     enable = lib.mkEnableOption "Caddy web server";
 
     host = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule ({name, ...}: {
+      type = lib.types.attrsOf (lib.types.submodule ({
+        name,
+        config,
+        ...
+      }: {
         options = {
           path = lib.mkOption {
             type = lib.types.str;
@@ -18,11 +24,11 @@
           };
           user = lib.mkOption {
             type = lib.types.str;
-            default = config.services.caddy.user;
+            default = caddyCfg.user;
           };
           group = lib.mkOption {
             type = lib.types.str;
-            default = config.services.caddy.group;
+            default = config.user;
           };
         };
       }));

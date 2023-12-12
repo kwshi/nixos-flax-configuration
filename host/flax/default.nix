@@ -33,6 +33,7 @@
   ks.caddy = {
     enable = true;
     host.localhost = {
+      user = "caddy-php";
       php.enable = true;
     };
   };
