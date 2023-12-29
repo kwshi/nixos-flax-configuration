@@ -11,9 +11,16 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./users.nix
-    profiles.caddy
     profiles.home-manager
   ];
+
+  ks.caddy = {
+    enable = true;
+    host."php.kshi.xyz" = {
+      user = "caddy-php";
+      php.enable = true;
+    };
+  };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
