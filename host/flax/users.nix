@@ -3,7 +3,7 @@
   users.users.kiwi = {
     isNormalUser = true;
     description = "Kye";
-    extraGroups = ["networkmanager" "wheel" "video" "docker"];
+    extraGroups = ["networkmanager" "wheel" "video" "docker" "caddy-php"];
   };
 
   home-manager.users.kiwi = {
