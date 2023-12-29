@@ -2,7 +2,7 @@
   users.users.kiwi = {
     isNormalUser = true;
     home = "/home/kiwi";
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "caddy-php"];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyQ55TUP8Z6WWWvun4v7jD167Lx9yuLqUCO124kRFEY kiwi@flax"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBV9Y65uxFw68NvGELnZ8blYts+TPLB+f+oqH01RNN49 kshi@boi"
