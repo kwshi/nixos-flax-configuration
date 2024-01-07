@@ -12,6 +12,8 @@
     ./hardware-configuration.nix
     ./users.nix
     profiles.home-manager
+    profiles.hedgedoc
+    profiles.whitebophir
   ];
 
   ks.caddy = {
