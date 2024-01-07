@@ -5,7 +5,6 @@
     wl-clipboard
 
     typst
-    rmapi
     peek
     just
     pavucontrol

@@ -14,6 +14,7 @@
       ./users.nix
     ]
     ++ (with profiles; [
+      remarkable
       lightdm
       binbash
       console
@@ -39,6 +40,10 @@
   };
   # disable local SSL (caddy tries to install local cert, fails)
   services.caddy.virtualHosts.localhost.hostName = "http://localhost";
+
+  # temporarily enabled for remarkable update, ok to remove when done
+  # https://github.com/ddvk/remarkable-update
+  #networking.firewall.allowedTCPPorts = [8000 5900];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

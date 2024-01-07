@@ -15,6 +15,7 @@
   }: {
     imports = (
       with profiles; [
+        remarkable
         cad
         kanshi
         ssh
@@ -71,9 +72,7 @@
       tectonic
       (pkgs.texlive.combine {inherit (pkgs.texlive) scheme-full;})
     ];
-    #xsession.enable = true;
-    #xsession.windowManager.awesome.enable = true;
-    #xsession.windowManager.awesome.luaModules = with pkgs.luaPackages; [ fennel ];
+
     lib.file = {
       mkDotfileSymlink = path:
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${path}";
