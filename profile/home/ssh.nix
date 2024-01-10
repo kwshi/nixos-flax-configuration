@@ -13,6 +13,10 @@
         user = "kwshi";
         identityFile = "${config.home.homeDirectory}/.ssh/keys/kwshi@laguna.pic.ucla.edu";
       };
+      "git.sr.ht" = {
+        user = "kwshi";
+        identityFile = "${config.home.homeDirectory}/.ssh/keys/sr.ht";
+      };
     };
   };
 }

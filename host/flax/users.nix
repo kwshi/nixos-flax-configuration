@@ -15,6 +15,7 @@
   }: {
     imports = (
       with profiles; [
+        hut
         remarkable
         cad
         kanshi
