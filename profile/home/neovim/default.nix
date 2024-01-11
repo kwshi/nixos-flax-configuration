@@ -25,6 +25,8 @@ in {
   programs.neovim = {
     enable = true;
 
+    defaultEditor = true;
+
     plugins = with pkgs.vimPlugins; [
       gruvbox-nvim
       #null-ls-nvim
@@ -42,6 +44,8 @@ in {
       cmp-nvim-lsp
       cmp_luasnip
 
+      typst-vim
+
       (nvim-treesitter.withPlugins (p:
         with p; [
           latex
@@ -55,6 +59,12 @@ in {
 
     extraPackages = with pkgs; [
       wl-clipboard
+
+      typst
+      typst-fmt
+      typst-live
+      typst-lsp
+      #unstable.prettypst
 
       fnlfmt
       #pkgs.python312Packages.black

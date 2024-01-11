@@ -24,3 +24,5 @@
 (lsp.phpactor.setup {: on_attach})
 (lsp.ccls.setup {: on_attach})
 
+(lsp.typst_lsp.setup {: on_attach :settings {:exportPdf :onType}})
+
