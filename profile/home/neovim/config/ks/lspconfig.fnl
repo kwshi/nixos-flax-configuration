@@ -24,5 +24,12 @@
 (lsp.phpactor.setup {: on_attach})
 (lsp.ccls.setup {: on_attach})
 
-(lsp.typst_lsp.setup {: on_attach :settings {:exportPdf :onType}})
+;; https://github.com/nvarner/typst-lsp/discussions/306
+;; maybe related issue: https://github.com/nvarner/typst-lsp/issues/265
+;; formatting does not work, for whatever reason (whenever I try I just get "no servers enabled")
+;; which is really strange and incomprehensible. going to use conform for now.
+(lsp.typst_lsp.setup {: on_attach
+                      :settings {:exportPdf :onSave
+                                 ;:experimentalFormatterMode :on
+                                 }})
 

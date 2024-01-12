@@ -60,6 +60,7 @@
         safeeyes
         haskell
         vscode
+        mime
       ]
     );
 

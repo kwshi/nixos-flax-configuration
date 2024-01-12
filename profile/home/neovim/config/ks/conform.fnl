@@ -9,7 +9,8 @@
                          :just [:just]
                          :nix [:alejandra]
                          :fennel [:fnlfmt]
-                         :tex [:latexindent]})
+                         :tex [:latexindent]
+                         :typst [:typstfmt]})
 
 (conform.setup {: formatters
                 : formatters_by_ft
