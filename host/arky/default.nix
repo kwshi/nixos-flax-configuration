@@ -14,7 +14,22 @@
     profiles.home-manager
     profiles.hedgedoc
     profiles.whitebophir
+    profiles.podman
   ];
+
+  services.caddy.virtualHosts = {
+    "live.kshi.xyz".extraConfig = ''
+      reverse_proxy localhost:7122
+    '';
+
+    "pic.kshi.xyz".extraConfig = ''
+      reverse_proxy https://www.pic.ucla.edu {
+        # https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#syntax
+      	header_up Host {upstream_hostport}
+        rewrite /~kwshi/demo/{path}
+      }
+    '';
+  };
 
   ks.caddy = {
     enable = true;

@@ -34,5 +34,7 @@
     home.stateVersion = "23.05";
     programs.git.signing.key = "E43C6773";
     services.gpg-agent.pinentryFlavor = "curses";
+
+    home.packages = with pkgs; [just waypipe];
   };
 }
