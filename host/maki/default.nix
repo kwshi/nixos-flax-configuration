@@ -7,10 +7,22 @@
   profiles,
   ...
 }: {
-  imports = [./hardware-configuration.nix ./users.nix];
+  imports =
+    [./hardware-configuration.nix ./users.nix]
+    ++ (with profiles; [
+      binbash
+      home-manager
+      upower
+      podman
+    ]);
   nix.extraOptions = ''
     extra-experimental-features = nix-command flakes
   '';
+
+  hardware.bluetooth = {
+    enable = true;
+  };
+  services.blueman.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

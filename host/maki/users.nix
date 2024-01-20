@@ -14,6 +14,7 @@
     ...
   }: {
     imports = with profiles; [
+      git
       ssh
       bash
       bat
@@ -23,7 +24,7 @@
       foot
       user-dirs
       waybar
-      neovim-nix
+      neovim #neovim-nix
       theme
       firefox
       gpg
@@ -37,6 +38,8 @@
       gammastep
       ime
     ];
+    programs.git.signing.key = "3B1646CD";
+    home.packages = with pkgs; [just];
     home.stateVersion = "23.05";
     home.file = {
       nixos.source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos";
