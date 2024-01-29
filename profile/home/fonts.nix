@@ -8,6 +8,7 @@
     xits-math
     eb-garamond
     garamond-libre
+    libertinus
 
     line-awesome
     font-awesome

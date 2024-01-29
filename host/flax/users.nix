@@ -67,11 +67,12 @@
     home.stateVersion = "22.11";
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
+      caddy
+      waypipe
       filezilla
       imagemagick
       neofetch
       signal-desktop
-      tectonic
       (pkgs.texlive.combine {inherit (pkgs.texlive) scheme-full;})
     ];
 

@@ -41,6 +41,8 @@
   # disable local SSL (caddy tries to install local cert, fails)
   services.caddy.virtualHosts.localhost.hostName = "http://localhost";
 
+  services.fstrim.enable = true;
+
   # temporarily enabled for remarkable update, ok to remove when done
   # https://github.com/ddvk/remarkable-update
   #networking.firewall.allowedTCPPorts = [8000 5900];

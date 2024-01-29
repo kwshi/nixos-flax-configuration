@@ -4,7 +4,7 @@
 
     wl-clipboard
 
-    typst
+    unstable.typst
     peek
     just
     pavucontrol
