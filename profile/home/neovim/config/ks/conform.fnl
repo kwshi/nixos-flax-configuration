@@ -5,12 +5,13 @@
                    :latexindent {:cwd (conform/util.root_file [:.latexindent.yaml])
                                  :prepend_args [:-m :-l]}})
 
-(local formatters_by_ft {:python [:black]
+(local formatters_by_ft {:python [:ruff_format]
                          :just [:just]
                          :nix [:alejandra]
                          :fennel [:fnlfmt]
                          :tex [:latexindent]
-                         :typst [:typstfmt]})
+                         :typst [:typstfmt]
+                         :html [:prettierd]})
 
 (conform.setup {: formatters
                 : formatters_by_ft

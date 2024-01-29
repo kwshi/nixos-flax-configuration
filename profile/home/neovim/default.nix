@@ -60,16 +60,21 @@ in {
     extraPackages = with pkgs; [
       wl-clipboard
 
-      typst
+      unstable.typst
       typst-fmt
       typst-live
-      typst-lsp
+      unstable.typst-lsp
       #unstable.prettypst
 
       fnlfmt
-      #pkgs.python312Packages.black
+      #black
       ruff
       ruff-lsp
+
+      vscode-langservers-extracted
+      nodePackages.prettier
+      prettierd
+      biome
 
       ccls
       rust-analyzer
