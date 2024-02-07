@@ -29,6 +29,7 @@
       udisks2
       greetd
       home-manager
+      obs
     ]);
 
   ks.caddy = {
