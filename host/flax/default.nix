@@ -29,7 +29,6 @@
       udisks2
       greetd
       home-manager
-      obs
     ]);
 
   ks.caddy = {
@@ -48,11 +47,25 @@
   # https://github.com/ddvk/remarkable-update
   #networking.firewall.allowedTCPPorts = [8000 5900];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        memtest86.enable = true;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+
+    # https://www.reddit.com/r/NixOS/comments/p8bqvu/how_to_install_v4l2looback_kernel_module/
+    extraModulePackages = [config.boot.kernelPackages.v4l2loopback.out];
+    kernelModules = ["v4l2loopback"];
+    extraModprobeConfig = ''
+      options v4l2loopback exclusive_caps=1 card_label="virtual-camera"
+    '';
+  };
 
   hardware.keyboard.qmk.enable = true;
   # https://get.vial.today/manual/linux-udev.html
