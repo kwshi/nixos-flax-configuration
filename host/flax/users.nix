@@ -15,6 +15,7 @@
   }: {
     imports = (
       with profiles; [
+        obs
         hut
         remarkable
         cad
@@ -22,6 +23,7 @@
         ssh
         sagemath
         eww
+        ime
         misc
         bat
         neovim
